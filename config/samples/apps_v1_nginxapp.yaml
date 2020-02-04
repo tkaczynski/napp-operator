@@ -1,0 +1,7 @@
+apiVersion: apps.example.com/v1
+kind: NginxApp
+metadata:
+  name: nginxapp-sample
+spec:
+  # Add fields here
+  foo: bar

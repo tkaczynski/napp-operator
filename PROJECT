@@ -1,0 +1,7 @@
+domain: example.com
+repo: example.com/napp-operator
+resources:
+- group: apps
+  kind: NginxApp
+  version: v1
+version: "2"
