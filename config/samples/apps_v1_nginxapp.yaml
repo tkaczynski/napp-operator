@@ -1,7 +1,11 @@
 apiVersion: apps.example.com/v1
 kind: NginxApp
 metadata:
-  name: nginxapp-sample
+  name: myapp1
 spec:
-  # Add fields here
-  foo: bar
+  mainapp:
+    image: "bitnami/nginx:1.16-debian-9"
+    welcometext: "Hello from Main App!"
+  helperapp:
+    image: "bitnami/nginx:1.16-debian-9"
+    welcometext: "Hello from Helper App!"

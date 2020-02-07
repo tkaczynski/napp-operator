@@ -22,22 +22,42 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+type SimpleNginxApp struct {
+	Image       string `json:"image"`
+	WelcomeText string `json:"welcometext"`
+}
+
 // NginxAppSpec defines the desired state of NginxApp
 type NginxAppSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of NginxApp. Edit NginxApp_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	MainApp   SimpleNginxApp `json:"mainapp"`
+	HelperApp SimpleNginxApp `json:"helperapp"`
 }
+
+// +kubebuilder:validation:Enum=Pending;Running;Failed
+type ApplicationPhase string
+
+const (
+	PhasePending ApplicationPhase = "Pending"
+	PhaseRunning ApplicationPhase = "Running"
+	PhaseFailed  ApplicationPhase = "Failed"
+)
 
 // NginxAppStatus defines the observed state of NginxApp
 type NginxAppStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	Phase ApplicationPhase `json:"phase"`
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:resource:shortName="napp"
 
 // NginxApp is the Schema for the nginxapps API
 type NginxApp struct {
